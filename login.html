@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar Sesión / Registrarse</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #f0ede7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+    .auth-container {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    .auth-container.register {
+      max-width: 700px;
+    }
+    .auth-container h2 {
+      margin-bottom: 25px;
+      color: #009379;
+      font-size: 28px;
+      font-weight: 700;
+      position: relative;
+      padding-bottom: 15px;
+    }
+    .auth-container h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, #009379, #00735c);
+      border-radius: 2px;
+    }
+    .auth-container .subtitle {
+      color: #666;
+      font-size: 14px;
+      margin-top: -15px;
+      margin-bottom: 25px;
+      font-weight: 400;
+    }
+    .auth-container input[type="text"],
+    .auth-container input[type="password"],
+    .auth-container input[type="email"],
+    .auth-container select {
+      width: 100%;
+      padding: 12px;
+      margin: 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      transition: border-color 0.3s ease;
+      background-color: #88afa734;
+      box-sizing: border-box;
+    }
+    .auth-container input[type="text"]:focus,
+    .auth-container input[type="password"]:focus,
+    .auth-container input[type="email"]:focus,
+    .auth-container select:focus {
+      border-color: #009379;
+      outline: none;
+    }
+    .auth-container button {
+      width: 100%;
+      padding: 14px;
+      background-color: #009379;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+      margin-top: 10px;
+    }
+    .auth-container button:hover {
+      background-color: #00735c;
+    }
+    .auth-container .toggle-form {
+      margin-top: 20px;
+      color: #009379;
+      cursor: pointer;
+      text-decoration: underline;
+      transition: color 0.3s ease;
+      font-size: 14px;
+    }
+    .auth-container .toggle-form:hover {
+      color: #00735c;
+    }
+    .auth-container form {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+    .form-grid.two-columns {
+      grid-template-columns: 1fr 1fr;
+    }
+    .auth-container .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+    .auth-container .form-group label {
+      margin-bottom: 6px;
+      color: #333;
+      font-weight: 500;
+      font-size: 14px;
+    }
+    .form-group.full-width {
+      grid-column: 1 / -1;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .form-grid.two-columns {
+        grid-template-columns: 1fr;
+      }
+      .auth-container {
+        padding: 25px;
+      }
+      .auth-container h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+      .auth-container .subtitle {
+        font-size: 13px;
+        margin-top: -10px;
+        margin-bottom: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 10px;
+      }
+      .auth-container {
+        padding: 20px;
+      }
+      .auth-container h2 {
+        font-size: 22px;
+        margin-bottom: 20px;
+      }
+      .auth-container input[type="text"],
+      .auth-container input[type="password"],
+      .auth-container input[type="email"],
+      .auth-container select {
+        padding: 10px;
+      }
+      .auth-container button {
+        padding: 12px;
+        font-size: 15px;
+      }
+      .form-grid {
+        gap: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Login Form -->
+  <div class="auth-container" id="loginContainer">
+    <h2>Bienvenido a Surotec</h2>
+    <p class="subtitle">Inicia sesión para continuar</p>
+    <form id="loginForm">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="loginUsername">Usuario</label>
+          <input type="text" id="loginUsername" placeholder="juanperez" required>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Contraseña</label>
+          <input type="password" id="loginPassword" placeholder="••••••••" required>
+        </div>
+      </div>
+      <button type="submit">Ingresar</button>
+    </form>
+    <div class="toggle-form" onclick="toggleForm()">¿No tienes una cuenta? Regístrate aquí</div>
+  </div>
+
+  <!-- Register Form -->
+  <div class="auth-container register" id="registerContainer" style="display: none;">
+    <h2>Crear Cuenta</h2>
+    <p class="subtitle">Completa tus datos para registrarte</p>
+    <form id="registerForm">
+      <div class="form-grid two-columns">
+        <div class="form-group">
+          <label for="registerDocumentType">Tipo de Documento</label>
+          <select id="registerDocumentType" required>
+            <option value="">Selecciona</option>
+            <option value="CC">Cédula de Ciudadanía</option>
+            <option value="TI">Tarjeta de Identidad</option>
+            <option value="CE">Cédula de Extranjería</option>
+            <option value="PAS">Pasaporte</option>
+            <option value="RC">Registro Civil</option>
+            <option value="NIT">NIT</option>
+            <option value="PEP">Permiso Especial de Permanencia</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="registerDocumentNumber">Número de Documento</label>
+          <input type="text" id="registerDocumentNumber" placeholder="123456789" required>
+        </div>
+        <div class="form-group">
+          <label for="registerFirstName">Nombre</label>
+          <input type="text" id="registerFirstName" placeholder="Juan" required>
+        </div>
+        <div class="form-group">
+          <label for="registerLastName">Apellido</label>
+          <input type="text" id="registerLastName" placeholder="Pérez" required>
+        </div>
+        <div class="form-group">
+          <label for="registerUsername">Usuario</label>
+          <input type="text" id="registerUsername" placeholder="juanperez" required>
+        </div>
+        <div class="form-group">
+          <label for="registerEmail">Correo Electrónico</label>
+          <input type="email" id="registerEmail" placeholder="juanperez@example.com" required>
+        </div>
+        <div class="form-group full-width">
+          <label for="registerPassword">Contraseña</label>
+          <input type="password" id="registerPassword" placeholder="••••••••" required>
+        </div>
+      </div>
+      <button type="submit">Registrarse</button>
+    </form>
+    <div class="toggle-form" onclick="toggleForm()">¿Ya tienes una cuenta? Inicia sesión aquí</div>
+  </div>
+
+  <script>
+    const loginApiUrl = '/users/login'; // Asumiendo que tienes un endpoint para login
+    const registerApiUrl = '/users';
+
+    // Toggle between login and register forms
+    function toggleForm() {
+      const loginContainer = document.getElementById('loginContainer');
+      const registerContainer = document.getElementById('registerContainer');
+      if (loginContainer.style.display === 'none') {
+        loginContainer.style.display = 'block';
+        registerContainer.style.display = 'none';
+      } else {
+        loginContainer.style.display = 'none';
+        registerContainer.style.display = 'block';
+      }
+    }
+
+    // Handle login form submission
+    document.getElementById('loginForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+      const username = document.getElementById('loginUsername').value;
+      const password = document.getElementById('loginPassword').value;
+
+      const loginData = {
+        username: username,
+        password: password
+      };
+
+      try {
+        const response = await fetch(loginApiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(loginData),
+        });
+
+        if (response.ok) {
+          const userData = await response.json();
+          alert(`Bienvenido a Surotec, ${userData.firstName} ${userData.lastName}`);
+        } else {
+          alert('Credenciales incorrectas');
+        }
+      } catch (error) {
+        console.error('Error al iniciar sesión:', error);
+        alert('Error al iniciar sesión');
+      }
+    });
+
+    // Handle register form submission
+    document.getElementById('registerForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+      const documentType = document.getElementById('registerDocumentType').value;
+      const documentNumber = document.getElementById('registerDocumentNumber').value;
+      const firstName = document.getElementById('registerFirstName').value;
+      const lastName = document.getElementById('registerLastName').value;
+      const username = document.getElementById('registerUsername').value;
+      const email = document.getElementById('registerEmail').value;
+      const password = document.getElementById('registerPassword').value;
+
+      const registerData = {
+        documentType: documentType,
+        documentNumber: documentNumber,
+        firstName: firstName,
+        lastName: lastName,
+        username: username,
+        email: email,
+        password: password
+      };
+
+      try {
+        const response = await fetch(registerApiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(registerData),
+        });
+
+        if (response.ok) {
+          const userData = await response.json();
+          alert(`Registro exitoso para ${userData.firstName} ${userData.lastName}`);
+          toggleForm();
+        } else {
+          alert('Error en el registro');
+        }
+      } catch (error) {
+        console.error('Error al registrar:', error);
+        alert('Error al registrar');
+      }
+    });
+  </script>
+</body>
+
+</html>
