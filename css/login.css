@@ -1,0 +1,192 @@
+  body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: #f0ede7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .auth-container {
+      background-color: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .auth-container.register {
+      max-width: 700px;
+    }
+
+    .auth-container h2 {
+      margin-bottom: 25px;
+      color: #009379;
+      font-size: 28px;
+      font-weight: 700;
+      position: relative;
+      padding-bottom: 15px;
+    }
+
+    .auth-container h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, #009379, #00735c);
+      border-radius: 2px;
+    }
+
+    .auth-container .subtitle {
+      color: #666;
+      font-size: 14px;
+      margin-top: -15px;
+      margin-bottom: 25px;
+      font-weight: 400;
+    }
+
+    .auth-container input[type="text"],
+    .auth-container input[type="password"],
+    .auth-container input[type="email"],
+    .auth-container select {
+      width: 100%;
+      padding: 12px;
+      margin: 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      transition: border-color 0.3s ease;
+      background-color: #88afa734;
+      box-sizing: border-box;
+    }
+
+    .auth-container input[type="text"]:focus,
+    .auth-container input[type="password"]:focus,
+    .auth-container input[type="email"]:focus,
+    .auth-container select:focus {
+      border-color: #009379;
+      outline: none;
+    }
+
+    .auth-container button {
+      width: 100%;
+      padding: 14px;
+      background-color: #009379;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .auth-container button:hover {
+      background-color: #00735c;
+    }
+
+    .auth-container .toggle-form {
+      margin-top: 20px;
+      color: #009379;
+      cursor: pointer;
+      text-decoration: underline;
+      transition: color 0.3s ease;
+      font-size: 14px;
+    }
+
+    .auth-container .toggle-form:hover {
+      color: #00735c;
+    }
+
+    .auth-container form {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .form-grid.two-columns {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .auth-container .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .auth-container .form-group label {
+      margin-bottom: 6px;
+      color: #333;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .form-group.full-width {
+      grid-column: 1 / -1;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .form-grid.two-columns {
+        grid-template-columns: 1fr;
+      }
+
+      .auth-container {
+        padding: 25px;
+      }
+
+      .auth-container h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+      }
+
+      .auth-container .subtitle {
+        font-size: 13px;
+        margin-top: -10px;
+        margin-bottom: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 10px;
+      }
+
+      .auth-container {
+        padding: 20px;
+      }
+
+      .auth-container h2 {
+        font-size: 22px;
+        margin-bottom: 20px;
+      }
+
+      .auth-container input[type="text"],
+      .auth-container input[type="password"],
+      .auth-container input[type="email"],
+      .auth-container select {
+        padding: 10px;
+      }
+
+      .auth-container button {
+        padding: 12px;
+        font-size: 15px;
+      }
+
+      .form-grid {
+        gap: 15px;
+      }
+    }

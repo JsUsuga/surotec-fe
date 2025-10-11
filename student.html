@@ -6,6 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel de Estudiantes - Surotec Academy</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="/js/config.js" defer></script>  
+  
   <style>
     * {
       margin: 0;
@@ -549,7 +552,7 @@
   </div>
 
   <script>
-    const apiUrl = '/students';
+    const apiUrl = 'http://localhost:8080/students';
 
     // Fetch and display students
     async function fetchStudents() {
@@ -600,7 +603,7 @@
       };
 
       try {
-        const response = await fetch(apiUrl, {
+        const response = await fetch(`${apiBaseUrl}/students`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
