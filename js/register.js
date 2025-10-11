@@ -4,7 +4,7 @@ const errorMsg = document.getElementById("error-message");
 registerForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  // 1️⃣ Tomamos los valores de los campos del formulario
+  // 1 Tomamos los valores de los campos del formulario
   const documentType = document.getElementById("registerDocumentType").value;
   const documentNumber = document.getElementById("registerDocumentNumber").value;
   const firstName = document.getElementById("registerFirstName").value;
@@ -14,7 +14,7 @@ registerForm.addEventListener("submit", async (e) => {
   const password = document.getElementById("registerPassword").value;
 
   try {
-    // 2️⃣ Hacemos la petición POST al backend
+    // Hacemos la petición POST al backend
     const response = await fetch(`${apiBaseUrl}/students`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -30,7 +30,7 @@ registerForm.addEventListener("submit", async (e) => {
       }),
     });
 
-    // 3️⃣ Verificamos la respuesta
+    // Verificamos la respuesta
     if (!response.ok) {
       throw new Error("Error al registrar el usuario");
     }
@@ -38,7 +38,7 @@ registerForm.addEventListener("submit", async (e) => {
     const userData = await response.json();
     alert(`✅ Usuario registrado con éxito: ${userData.firstName} ${userData.lastName}`);
 
-    // 4️⃣ Volver al login después del registro
+    // Volver al login después del registro
     toggleForm();
 
   } catch (error) {
