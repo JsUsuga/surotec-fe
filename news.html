@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gestión de Empleados - Surotec Academy</title>
+  <title>Gestión de Noticias - Surotec Academy</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * {
@@ -99,7 +99,9 @@
       font-weight: 600;
     }
 
-    .form-group input {
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
       width: 100%;
       padding: 8px;
       border: 1px solid #ccc;
@@ -215,113 +217,130 @@
 
   <!-- Main Container -->
   <div class="container">
-    <!-- Create Employee Form -->
+    <!-- Create News Form -->
     <div class="form-container">
-      <h2>Añadir Empleado</h2>
-      <form id="createEmployeeForm">
+      <h2>Añadir Noticia</h2>
+      <form id="createNewsForm">
         <div class="form-group">
-          <label for="position">Posición</label>
-          <input type="text" id="position" name="position" required>
+          <label for="title">Título</label>
+          <input type="text" id="title" name="title" required>
         </div>
         <div class="form-group">
-          <label for="area">Área</label>
-          <input type="text" id="area" name="area" required>
+          <label for="content">Contenido</label>
+          <textarea id="content" name="content" rows="4" required></textarea>
         </div>
         <div class="form-group">
-          <label for="userId">ID Usuario</label>
-          <input type="number" id="userId" name="userId" required>
+          <label for="employeeId">ID Empleado</label>
+          <input type="number" id="employeeId" name="employeeId" required>
         </div>
-        <button type="submit" class="btn btn-primary">Crear Empleado</button>
+        <div class="form-group">
+          <label for="status">Estado</label>
+          <select id="status" name="status" required>
+            <option value="DRAFT">Borrador</option>
+            <option value="PUBLISHED">Publicado</option>
+            <option value="ARCHIVED">Archivado</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Crear Noticia</button>
       </form>
     </div>
 
-    <!-- Update Employee Form -->
-    <div class="form-container" id="updateEmployeeFormContainer" style="display: none;">
-      <h2>Actualizar Empleado</h2>
-      <form id="updateEmployeeForm">
-        <input type="hidden" id="updateEmployeeId" name="updateEmployeeId">
+    <!-- Update News Form -->
+    <div class="form-container" id="updateNewsFormContainer" style="display: none;">
+      <h2>Actualizar Noticia</h2>
+      <form id="updateNewsForm">
+        <input type="hidden" id="updateNewsId" name="updateNewsId">
         <div class="form-group">
-          <label for="updatePosition">Posición</label>
-          <input type="text" id="updatePosition" name="updatePosition" required>
+          <label for="updateTitle">Título</label>
+          <input type="text" id="updateTitle" name="updateTitle" required>
         </div>
         <div class="form-group">
-          <label for="updateArea">Área</label>
-          <input type="text" id="updateArea" name="updateArea" required>
+          <label for="updateContent">Contenido</label>
+          <textarea id="updateContent" name="updateContent" rows="4" required></textarea>
         </div>
         <div class="form-group">
-          <label for="updateUserId">ID Usuario</label>
-          <input type="number" id="updateUserId" name="updateUserId" required>
+          <label for="updateEmployeeId">ID Empleado</label>
+          <input type="number" id="updateEmployeeId" name="updateEmployeeId" required>
         </div>
-        <button type="submit" class="btn btn-primary">Actualizar Empleado</button>
+        <div class="form-group">
+          <label for="updateStatus">Estado</label>
+          <select id="updateStatus" name="updateStatus" required>
+            <option value="DRAFT">Borrador</option>
+            <option value="PUBLISHED">Publicado</option>
+            <option value="ARCHIVED">Archivado</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Actualizar Noticia</button>
         <button type="button" class="btn btn-danger" onclick="cancelUpdate()">Cancelar</button>
       </form>
     </div>
 
-    <!-- Employees Table -->
+    <!-- News Table -->
     <div class="table-container">
-      <h2>Listado de Empleados</h2>
-      <table id="employeesTable">
+      <h2>Listado de Noticias</h2>
+      <table id="newsTable">
         <thead>
           <tr>
             <th>ID</th>
-            <th>Posición</th>
-            <th>Área</th>
-            <th>Fecha de Contratación</th>
-            <th>ID Usuario</th>
+            <th>Título</th>
+            <th>Contenido</th>
+            <th>ID Empleado</th>
+            <th>Estado</th>
             <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
-          <!-- Employee rows will be inserted here -->
+          <!-- News rows will be inserted here -->
         </tbody>
       </table>
     </div>
   </div>
 
   <script>
-    const apiUrl = '/api/employees';
+    const apiUrl = '/api/news';
 
-    // Fetch and display employees
-    async function fetchEmployees() {
+    // Fetch and display news
+    async function fetchNews() {
       try {
         const response = await fetch(apiUrl);
         if (!response.ok) throw new Error('Network response was not ok');
-        const employees = await response.json();
-        displayEmployees(employees);
+        const newsList = await response.json();
+        displayNews(newsList);
       } catch (error) {
-        console.error('Error fetching employees:', error);
+        console.error('Error fetching news:', error);
       }
     }
 
-    // Display employees in the table
-    function displayEmployees(employees) {
-      const tableBody = document.querySelector('#employeesTable tbody');
+    // Display news in the table
+    function displayNews(newsList) {
+      const tableBody = document.querySelector('#newsTable tbody');
       tableBody.innerHTML = '';
-      employees.forEach(employee => {
+      newsList.forEach(news => {
         const row = document.createElement('tr');
         row.innerHTML = `
-          <td>${employee.id}</td>
-          <td>${employee.position}</td>
-          <td>${employee.area}</td>
-          <td>${new Date(employee.hireDate).toLocaleDateString()}</td>
-          <td>${employee.userId}</td>
+          <td>${news.id}</td>
+          <td>${news.title}</td>
+          <td>${news.content}</td>
+          <td>${news.employeeId}</td>
+          <td>${news.status}</td>
           <td>
-            <button class="btn btn-primary" onclick="editEmployee(${employee.id})">Editar</button>
-            <button class="btn btn-danger" onclick="deleteEmployee(${employee.id})">Eliminar</button>
+            <button class="btn btn-primary" onclick="editNews(${news.id})">Editar</button>
+            <button class="btn btn-danger" onclick="deleteNews(${news.id})">Eliminar</button>
           </td>
         `;
         tableBody.appendChild(row);
       });
     }
 
-    // Create a new employee
-    document.getElementById('createEmployeeForm').addEventListener('submit', async (event) => {
+    // Create a new news
+    document.getElementById('createNewsForm').addEventListener('submit', async (event) => {
       event.preventDefault();
       const formData = new FormData(event.target);
-      const employeeData = {
-        position: formData.get('position'),
-        area: formData.get('area'),
-        userId: parseInt(formData.get('userId')),
+      const newsData = {
+        title: formData.get('title'),
+        content: formData.get('content'),
+        employeeId: parseInt(formData.get('employeeId')),
+        status: formData.get('status'),
       };
 
       try {
@@ -330,83 +349,85 @@
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(employeeData),
+          body: JSON.stringify(newsData),
         });
         if (!response.ok) throw new Error('Network response was not ok');
-        fetchEmployees();
+        fetchNews();
         event.target.reset();
       } catch (error) {
-        console.error('Error creating employee:', error);
+        console.error('Error creating news:', error);
       }
     });
 
-    // Edit an employee
-    async function editEmployee(id) {
+    // Edit a news
+    async function editNews(id) {
       try {
         const response = await fetch(`${apiUrl}/${id}`);
         if (!response.ok) throw new Error('Network response was not ok');
-        const employee = await response.json();
-        document.getElementById('updateEmployeeId').value = employee.id;
-        document.getElementById('updatePosition').value = employee.position;
-        document.getElementById('updateArea').value = employee.area;
-        document.getElementById('updateUserId').value = employee.userId;
-        document.getElementById('createEmployeeFormContainer').style.display = 'none';
-        document.getElementById('updateEmployeeFormContainer').style.display = 'block';
+        const news = await response.json();
+        document.getElementById('updateNewsId').value = news.id;
+        document.getElementById('updateTitle').value = news.title;
+        document.getElementById('updateContent').value = news.content;
+        document.getElementById('updateEmployeeId').value = news.employeeId;
+        document.getElementById('updateStatus').value = news.status;
+        document.getElementById('createNewsFormContainer').style.display = 'none';
+        document.getElementById('updateNewsFormContainer').style.display = 'block';
       } catch (error) {
-        console.error('Error fetching employee:', error);
+        console.error('Error fetching news:', error);
       }
     }
 
-    // Update an employee
-    document.getElementById('updateEmployeeForm').addEventListener('submit', async (event) => {
+    // Update a news
+    document.getElementById('updateNewsForm').addEventListener('submit', async (event) => {
       event.preventDefault();
       const formData = new FormData(event.target);
-      const employeeData = {
-        id: parseInt(formData.get('updateEmployeeId')),
-        position: formData.get('updatePosition'),
-        area: formData.get('updateArea'),
-        userId: parseInt(formData.get('updateUserId')),
+      const newsData = {
+        id: parseInt(formData.get('updateNewsId')),
+        title: formData.get('updateTitle'),
+        content: formData.get('updateContent'),
+        employeeId: parseInt(formData.get('updateEmployeeId')),
+        status: formData.get('updateStatus'),
       };
 
       try {
-        const response = await fetch(`${apiUrl}/${employeeData.id}`, {
+        const response = await fetch(`${apiUrl}/${newsData.id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(employeeData),
+          body: JSON.stringify(newsData),
         });
         if (!response.ok) throw new Error('Network response was not ok');
-        fetchEmployees();
+        fetchNews();
         cancelUpdate();
       } catch (error) {
-        console.error('Error updating employee:', error);
+        console.error('Error updating news:', error);
       }
     });
 
     // Cancel update
     function cancelUpdate() {
-      document.getElementById('createEmployeeFormContainer').style.display = 'block';
-      document.getElementById('updateEmployeeFormContainer').style.display = 'none';
+      document.getElementById('createNewsFormContainer').style.display = 'block';
+      document.getElementById('updateNewsFormContainer').style.display = 'none';
     }
 
-    // Delete an employee
-    async function deleteEmployee(id) {
-      if (confirm('¿Estás seguro de que quieres eliminar este empleado?')) {
+    // Delete a news
+    async function deleteNews(id) {
+      if (confirm('¿Estás seguro de que quieres eliminar esta noticia?')) {
         try {
           const response = await fetch(`${apiUrl}/${id}`, {
             method: 'DELETE',
           });
           if (!response.ok) throw new Error('Network response was not ok');
-          fetchEmployees();
+          fetchNews();
         } catch (error) {
-          console.error('Error deleting employee:', error);
+          console.error('Error deleting news:', error);
         }
       }
     }
 
     // Initial fetch
-    fetchEmployees();
+    fetchNews();
   </script>
 </body>
 
