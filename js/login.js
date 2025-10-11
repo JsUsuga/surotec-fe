@@ -5,7 +5,6 @@ const errorMsg2 = document.getElementById("error-message");
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  // ✅ IDs corregidos
   const username = document.getElementById("loginUsername").value;
   const password = document.getElementById("loginPassword").value;
 
@@ -22,10 +21,10 @@ form.addEventListener("submit", async (e) => {
 
     const userData = await response.json();
 
-    // ✅ Guardar usuario
+    // Guardar usuario
     localStorage.setItem("user", JSON.stringify(userData));
 
-    // ✅ Redirección por rol
+    // Redirección por rol
     if (userData.role === "ADMIN") {
       window.location.href = "admin.html";
     } else {
